@@ -1,52 +1,65 @@
 const canvasSketch = require('canvas-sketch');
 const { lerp } = require('canvas-sketch-util/math');
+const palettes = require('nice-color-palettes/1000.json');
 const random = require('canvas-sketch-util/random');
+
+let palette = random.pick(palettes);
+
+palette = random.shuffle(palette);
+palette = palette.slice(0, random.rangeFloor(2, palette.length + 1));
+
+const background = palette.shift();
 
 const settings = {
   dimensions: [ 2048, 2048 ]
 };
 
 const sketch = () => {
+  const count = 30;
 
   const createGrid = () => {
     const points = [];
-    const count = 40;
-    for (let x = 0; x < count; x++){
-      for (let y = 0; y < count; y++){
-        const u = count <= 1 ? 0.5 : x / (count - 1);
-        const v = count <= 1 ? 0.5 : y / (count - 1);
+    for (let x = 0; x < count; x++) {
+      for (let y = 0; y < count; y++) {
+        const u = x / (count - 1);
+        const v = y / (count - 1);
+        const position = [ u, v ];
         points.push({
-          radius: Math.abs(random.gaussian() * 0.01),
-          position: [ u, v ]
+          color: random.pick(palette),
+          radius: Math.abs(30 + 20 * random.gaussian()),
+          position
         });
       }
     }
     return points;
   };
 
-  random.setSeed('bazoka');
-  const points = createGrid().filter(() => random.value() > 0.5)
-  const margin = 400;
+  let points = createGrid().filter(() => {
+    return Math.random() > 0.75;
+  });
+
+  points = random.shuffle(points);
 
   return ({ context, width, height }) => {
-    context.fillStyle = 'white';
+    const margin = width * 0.175;
+
+    context.fillStyle = background;
     context.fillRect(0, 0, width, height);
 
     points.forEach(data => {
-      const { position, radius } = data;
-
-      const [ u, v ] = position;
-
-
-      const x = lerp(margin, width - margin, u);
-      const y = lerp(margin, width - margin, v);
+      const {
+        position,
+        radius,
+        color
+      } = data;
+      const x = lerp(margin, width - margin, position[0]);
+      const y = lerp(margin, height - margin, position[1]);
 
       context.beginPath();
-      context.arc(x, y, radius * width, 0, Math.PI *2, false);
-      context.lineWidth = 10;
-      context.fillStyle = 'red';
+      context.arc(x, y, radius, 0, Math.PI * 2);
+      context.fillStyle = color;
       context.fill();
-    })
+    });
   };
 };
 
