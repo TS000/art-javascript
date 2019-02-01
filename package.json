@@ -1,0 +1,23 @@
+{
+  "name": "art-javascript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "sketch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TS000/art-javascript.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TS000/art-javascript/issues"
+  },
+  "homepage": "https://github.com/TS000/art-javascript#readme",
+  "dependencies": {
+    "canvas-sketch": "^0.2.0"
+  }
+}
