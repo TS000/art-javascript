@@ -1,6 +1,8 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
 const palettes = require('nice-color-palettes');
+const eases = require('eases');
+const BezierEasing = require('bezier-easing');
 
 // Ensure ThreeJS is in global scope for the 'examples/'
 global.THREE = require('three');
@@ -9,8 +11,8 @@ global.THREE = require('three');
 require('three/examples/js/controls/OrbitControls');
 
 const settings = {
-  dimensions: [512, 512],
-  fps: 24,
+  dimensions: [2000, 2000],
+  fps: 10,
   duration: 4,
   // Make the loop animated
   animate: true,
@@ -27,7 +29,7 @@ const sketch = ({ context }) => {
   });
 
   // WebGL background color
-  renderer.setClearColor('white', 1);
+  renderer.setClearColor('papayawhip', 1);
 
   // Setup a camera
   const camera = new THREE.OrthographicCamera();
@@ -35,7 +37,9 @@ const sketch = ({ context }) => {
   // Setup your scene
   const scene = new THREE.Scene();
 
-  const palette = random.pick(palettes);
+  const colorCount = random.rangeFloor(2, 6);
+  const palette = random.shuffle(random.pick(palettes))
+    .slice(0, colorCount);
 
   const box = new THREE.BoxGeometry(1, 1, 1);
   for (let i = 0; i < 40; i++) {
@@ -59,11 +63,13 @@ const sketch = ({ context }) => {
     scene.add(mesh);
   }
 
-  scene.add(new THREE.AmbientLight('lightgrey'));
+  scene.add(new THREE.AmbientLight('grey'));
 
-  const light = new THREE.DirectionalLight('white', 1);
+  const light = new THREE.DirectionalLight('lightblue', 1);
   light.position.set(0, 4, 0);
   scene.add(light);
+
+  const easeIn = BezierEasing(1, 1.79, 0.91, 0.07);
 
   // draw each frame
   return {
@@ -96,7 +102,8 @@ const sketch = ({ context }) => {
     },
     // Update & render your scene here
     render({ playhead }) {
-      scene.rotation.y = playhead * Math.PI * 2;
+      const t = Math.sin(playhead * Math.PI);
+      scene.rotation.y = easeIn(t);
       renderer.render(scene, camera);
     },
     // Dispose of events & renderer for cleaner hot-reloading
