@@ -3,14 +3,14 @@ const { lerp } = require('canvas-sketch-util/math');
 const palettes = require('nice-color-palettes/1000.json');
 const random = require('canvas-sketch-util/random');
 
-random.setSeed(random.getRandomSeed())
+random.setSeed(random.getRandomSeed());
 
 const settings = {
   suffix: random.getSeed(),
-  dimensions: [ 2048, 2048 ]
+  dimensions: [2048, 2048],
 };
 
-  const sketch = () => {
+const sketch = () => {
   const colorCount = random.rangeFloor(2, 6);
   const palette = random.shuffle(random.pick(palettes))
     .slice(0, colorCount);
@@ -27,42 +27,42 @@ const settings = {
           color: random.pick(palette),
           radius,
           rotation: random.noise2D(u, v) * 5,
-          position: [ u, v ]
+          position: [u, v],
         });
       }
     }
     return points;
   };
 
-const points = createGrid().filter(() => random.value() > 0.5);
-const margin = 400;
+  const points = createGrid().filter(() => random.value() > 0.5);
+  const margin = 400;
 
-return ({ context, width, height }) => {
-  context.fillStyle = 'white';
-  context.fillRect(0, 0, width, height);
+  return ({ context, width, height }) => {
+    context.fillStyle = 'white';
+    context.fillRect(0, 0, width, height);
 
-  points.forEach(data => {
-    const {
-      position,
-      radius,
-      color,
-      rotation
-    } = data;
+    points.forEach((data) => {
+      const {
+        position,
+        radius,
+        color,
+        rotation,
+      } = data;
 
-    const [ u, v ] = position;
+      const [u, v] = position;
 
-    const x = lerp(margin, width - margin, u);
-    const y = lerp(margin, height - margin, v);
-    
-    context.save();
-    context.fillStyle = color;
-    context.font = `${radius * width}px "Helvetica"`;
-    context.translate(x, y);
-    context.rotate(rotation);
-    context.fillText( 'w', 0, 0);
+      const x = lerp(margin, width - margin, u);
+      const y = lerp(margin, height - margin, v);
 
-    context.restore();
-  });
+      context.save();
+      context.fillStyle = color;
+      context.font = `${radius * width}px "Helvetica"`;
+      context.translate(x, y);
+      context.rotate(rotation);
+      context.fillText('katc', 0, 0);
+
+      context.restore();
+    });
   };
 };
 
