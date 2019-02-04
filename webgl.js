@@ -9,6 +9,9 @@ global.THREE = require('three');
 require('three/examples/js/controls/OrbitControls');
 
 const settings = {
+  dimensions: [512, 512],
+  fps: 24,
+  duration: 4,
   // Make the loop animated
   animate: true,
   // Get a WebGL canvas rather than 2D
@@ -56,7 +59,7 @@ const sketch = ({ context }) => {
     scene.add(mesh);
   }
 
-  scene.add(new THREE.AmbientLight('purple'));
+  scene.add(new THREE.AmbientLight('lightgrey'));
 
   const light = new THREE.DirectionalLight('white', 1);
   light.position.set(0, 4, 0);
@@ -72,7 +75,7 @@ const sketch = ({ context }) => {
       const aspect = viewportWidth / viewportHeight;
 
       // Ortho zoom
-      const zoom = 1.5;
+      const zoom = 2;
 
       // Bounds
       camera.left = -zoom * aspect;
@@ -92,7 +95,8 @@ const sketch = ({ context }) => {
       camera.updateProjectionMatrix();
     },
     // Update & render your scene here
-    render({ time }) {
+    render({ playhead }) {
+      scene.rotation.y = playhead * Math.PI * 2;
       renderer.render(scene, camera);
     },
     // Dispose of events & renderer for cleaner hot-reloading
