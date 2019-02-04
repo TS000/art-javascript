@@ -9,6 +9,6 @@ cd into repo folder
 
 Install dependencies: npm i
 
-canvas-sketch (the file you want to run)
+Run the file: canvas-sketch (the file you want to run)
 
 ex: canvas-sketch webgl
