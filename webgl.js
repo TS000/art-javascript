@@ -1,5 +1,6 @@
 const canvasSketch = require('canvas-sketch');
 const random = require('canvas-sketch-util/random');
+const palettes = require('nice-color-palettes');
 
 // Ensure ThreeJS is in global scope for the 'examples/'
 global.THREE = require('three');
@@ -31,12 +32,14 @@ const sketch = ({ context }) => {
   // Setup your scene
   const scene = new THREE.Scene();
 
+  const palette = random.pick(palettes);
+
   const box = new THREE.BoxGeometry(1, 1, 1);
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 40; i++) {
     const mesh = new THREE.Mesh(
       box,
-      new THREE.MeshBasicMaterial({
-        color: 'rebeccapurple',
+      new THREE.MeshStandardMaterial({
+        color: random.pick(palette),
       }),
     );
     mesh.position.set(
@@ -44,9 +47,20 @@ const sketch = ({ context }) => {
       random.range(-1, 1),
       random.range(-1, 1),
     );
-    mesh.scale.multiplyScalar(0.1);
+    mesh.scale.set(
+      random.range(-1, 1),
+      random.range(-1, 1),
+      random.range(-1, 1),
+    );
+    mesh.scale.multiplyScalar(0.5);
     scene.add(mesh);
   }
+
+  scene.add(new THREE.AmbientLight('purple'));
+
+  const light = new THREE.DirectionalLight('white', 1);
+  light.position.set(0, 4, 0);
+  scene.add(light);
 
   // draw each frame
   return {
