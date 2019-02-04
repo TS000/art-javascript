@@ -18,8 +18,11 @@
   },
   "homepage": "https://github.com/TS000/art-javascript#readme",
   "dependencies": {
+    "bezier-easing": "^2.1.0",
     "canvas-sketch": "^0.2.0",
     "canvas-sketch-util": "^1.6.0",
+    "eases": "^1.0.8",
+    "glslify": "^7.0.0",
     "nice-color-palettes": "^2.0.0",
     "three": "^0.101.1"
   },
