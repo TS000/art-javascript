@@ -11,4 +11,4 @@ Install dependencies: npm i
 
 Run the file: canvas-sketch (the file you want to run)
 
-ex: canvas-sketch webgl
+ex: canvas-sketch webgl.js
