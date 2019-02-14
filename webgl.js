@@ -63,7 +63,7 @@ const sketch = ({ context }) => {
     scene.add(mesh);
   }
 
-  scene.add(new THREE.AmbientLight('grey'));
+  scene.add(new THREE.AmbientLight('blue'));
 
   const light = new THREE.DirectionalLight('lightblue', 1);
   light.position.set(0, 4, 0);
@@ -103,7 +103,7 @@ const sketch = ({ context }) => {
     // Update & render your scene here
     render({ playhead }) {
       const t = Math.sin(playhead * Math.PI);
-      scene.rotation.y = easeIn(t);
+      scene.rotation.z = easeIn(t);
       renderer.render(scene, camera);
     },
     // Dispose of events & renderer for cleaner hot-reloading
