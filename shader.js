@@ -4,10 +4,10 @@ const glsl = require('glslify');
 
 // Setup our sketch
 const settings = {
-  dimensions: [ 1440, 900 ],
+  dimensions: [1000, 900],
   exportPixelRatio: 2,
   context: 'webgl',
-  animate: true
+  animate: true,
 };
 
 // Your glsl code
@@ -37,21 +37,17 @@ const frag = glsl(`
 `);
 
 // Your sketch, which simply returns the shader
-const sketch = ({ gl }) => {
-  // Create the shader and return it
-  return createShader({
-    // Pass along WebGL context
-    gl,
-    // Specify fragment and/or vertex shader strings
-    frag,
-    clearColor: 'hsl(0, 0%, 95%)',
-    // Specify additional uniforms to pass down to the shaders
-    uniforms: {
-      // Expose props from canvas-sketch
-      time: ({ time }) => time,
-      aspect: ({ width, height }) => width / height
-    }
-  });
-};
-
+const sketch = ({ gl }) => createShader({
+  // Pass along WebGL context
+  gl,
+  // Specify fragment and/or vertex shader strings
+  frag,
+  clearColor: 'hsl(100, 0%, 95%)',
+  // Specify additional uniforms to pass down to the shaders
+  uniforms: {
+    // Expose props from canvas-sketch
+    time: ({ time }) => time,
+    aspect: ({ width, height }) => width / height,
+  },
+});
 canvasSketch(sketch, settings);
