@@ -24,7 +24,7 @@
     "eases": "^1.0.8",
     "glslify": "^7.1.1",
     "nice-color-palettes": "^2.0.0",
-    "three": "^0.126.1"
+    "three": "^0.137.0"
   },
   "devDependencies": {
     "eslint": "^5.16.0",
